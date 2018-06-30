@@ -1,0 +1,60 @@
+{
+  "items": {
+    "-LCK2ZSB4tJJLhjw5CU1" : {
+      "name": "Heineken Lagar NRB 340ml",
+      "desc": "Heineken Lagar Can 340ml 6 Pack",
+      "category": "Beer",
+      "price": 42.00,
+      "image_url": "assets/imgs/items/heineken.jpg"
+    },
+   "-LCK2ZSB4tJJLhjw5CU2" : {
+     "name": "Budweiser Beer 340ml Bottle",
+      "desc": "Budweiser Beer 340ml Alluminium Bottle 12 Pack",
+      "category": "Beer",
+      "price": 120.00,
+      "image_url": "assets/imgs/items/budweiser.jpg"
+    },
+    "-LCK2ZSB4tJJLhjw5CU3" : {
+      "name": "Stella Artois Beer 340ml NRB",
+      "desc": "Stella Artois Beer 340ml NRB 6 Pack",
+      "category": "Beer",
+      "price": 82.00,
+      "image_url": "assets/imgs/items/heineken.jpg"
+    },
+    "-LCK2ZSB4tJJLhjw5CU4" : {
+      "name": "Amstel Lagar 440ml Can",
+      "desc": "Amstel Lagar 440ml 24 Pack",
+      "category": "Beer",
+      "price": 170.00,
+      "image_url": "assets/imgs/items/amstel.jpg"
+    },
+    "-LCK2ZSB4tJJLhjw5CU5" : {
+      "name": "Castle Light Can 440ml",
+      "desc": "Castle Light Can 440ml 6 Pack",
+      "category": "Beer",
+      "price": 76.00,
+      "image_url": "assets/imgs/items/castlelight.jpg"
+    },
+    "-LCK2ZSB4tJJLhjw5CU6" : {
+      "name": "Black Label 440ml Can",
+      "desc": "Black Label 440ml Can 12 Pack",
+      "category": "Beer",
+      "price": 99.00,
+      "image_url": "assets/imgs/items/blacklabel.jpg"
+    },
+    "-LCK2ZSB4tJJLhjw5CU7" : {
+      "name": "Castle Lagar 340ml",
+      "desc": "Castle Lagar 340ml 6 Pack",
+      "category": "Beer",
+      "price": 35.00,
+      "image_url": "assets/imgs/items/castle.jpg"
+    },
+    "-LCK2ZSB4tJJLhjw5CU8" : {
+      "name": "Flying Fish 340ml",
+      "desc": "Flying Fish 340ml 6 Pack",
+      "category": "Beer",
+      "price": 49.00,
+      "image_url": "assets/imgs/items/flyingfish.jpg"
+    }
+  }
+}
