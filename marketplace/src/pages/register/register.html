@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registerForm" novalidate>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label floating>Email Address</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item text-wrap class="error">
+          <div *ngIf="registerForm.controls['email'].dirty &&
+                    registerForm.controls['email'].invalid">
+            Email is incorrect.
+          </div>
+          <div *ngIf="registerForm.controls['password'].dirty &&
+                    registerForm.controls['password'].invalid">
+            Password should be 8 Character long.
+          </div>
+        </ion-item>
+      </ion-card-content>
+      <ion-row>
+        <div>
+          <button ion-button (click)="register()" color="secondary">Register</button>     
+        </div>
+      </ion-row>
+    </ion-card>
+  </form>
+</ion-content>

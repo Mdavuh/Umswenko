@@ -1,0 +1,62 @@
+page-filter {
+  .logo img {
+    width: 20%;
+    display: block;
+    margin: auto;
+    margin-top: 40px;
+  }
+
+  .content {
+    background-image: url('./../assets/imgs/splash_bw_blur.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .credentials {
+    margin-top: 20px;
+    border: 1px solid #e66767;
+  }
+
+  
+  .inner-margins {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .inner-margins ion-icon{
+      color: white;
+  }
+
+  .inner-margins ion-item{
+      background-color:rgba(0,0,0,0.8);
+      color: white;
+  }
+
+  .inner-margins ion-grid {
+       background-color:rgba(0,0,0,0.8);
+  }
+
+
+  .text-section {
+    margin-top: 20px;
+  }
+
+  .text-section {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .filter-section {
+    margin-top: 20px;
+    border: 1px solid #e66767;
+  }
+
+  .button {
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+  
+}

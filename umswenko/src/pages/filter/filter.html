@@ -1,0 +1,45 @@
+<ion-content padding class="content">
+  <div class="logo">
+    <img src="./../assets/icon/icon.png" alt="">
+  </div>
+  <div class="credentials">
+
+    <div class="inner-margins">
+      <ion-grid>
+        <ion-row>
+          <ion-col><button ion-button full outline color="button-color" icon-start (click)="openPage('LoginPage')">
+              <ion-icon name="md-unlock"></ion-icon>
+              <span style="color: white">SIGN-IN</span>
+            </button></ion-col>
+          <ion-col><button ion-button full outline color="button-color" icon-end (click)="openPage('RegisterPage')">
+              <span style="color: white">REGISTER</span>
+              <ion-icon name="md-clipboard"></ion-icon>
+            </button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </div>
+  <div class="text-section">
+    <span style="color: white; font-weight: bold">OR</span>
+  </div>
+  <div class="filter-section">
+
+    <div class="inner-margins">
+      <div class="list">
+        <ion-list>
+          <ion-item>
+            <ion-label><span style="color: white">Select City:</span></ion-label>
+            <ion-select [(ngModel)]="city">
+              <ion-option *ngFor="let c of cityArray" value="{{c.city}}">{{c.city}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <div class="button">
+      <button ion-button color="button-color" full (click)="openPage('HomePage')">OK</button>
+    </div>
+
+  </div>
+</ion-content>

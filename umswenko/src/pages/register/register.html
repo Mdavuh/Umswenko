@@ -1,0 +1,152 @@
+<ion-header> <ion-navbar transparent> </ion-navbar> </ion-header>
+
+<ion-content padding>
+  <div class="text-section">
+    <span style="color: #e66767; font-weight: bold; font-size: 25px;">U</span>
+    <span style="color: white; font-weight: bold; font-size: 20px;"
+      >MSWENKO</span
+    >
+  </div>
+  <div>
+    <ion-row>
+      <button ion-button clear full style="color: white; font-size: 14px;">
+        Already a member? Sign-In
+      </button>
+    </ion-row>
+  </div>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="input-section">
+      <ion-item>
+        <ion-input
+          placeholder="First Name"
+          type="text"
+          class="white-text"
+          formControlName="firstname"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          placeholder="Last Name"
+          type="text"
+          class="white-text"
+          formControlName="lastname"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          placeholder="Email"
+          type="email"
+          class="white-text"
+          formControlName="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          placeholder="Password"
+          type="password"
+          class="white-text"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item style="padding-bottom: 10px">
+        <ion-label
+          ><span style="color: #999; font-size: 14px;"
+            >&nbsp;&nbsp;Select City:</span
+          ></ion-label
+        >
+        <ion-select formControlName="city">
+          <ion-option *ngFor="let c of cityArray" value="{{c.city}}">{{
+            c.city
+          }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="signup-buttons">
+      <ion-grid>
+        <ion-row>
+          <button
+            ion-button
+            icon-start
+            color="button-color"
+            style="margin-top: 20px"
+            full
+            type="submit"
+            [disabled]="registerForm.invalid"
+          >
+            <ion-icon name="md-clipboard"></ion-icon>
+            <span style="padding-top: 4px;">Sign Up</span>
+          </button>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </form>
+
+  <div class="signup-buttons">
+    <ion-grid>
+      <ion-row>
+        <button
+          ion-button
+          icon-start
+          color="button-color"
+          full
+          outline
+          style="margin-top: 20px; background-color:rgba(0,0,0,0.5) !important"
+          (click)="loginGoogle()"
+        >
+          <ion-icon name="logo-googleplus"></ion-icon>
+          <span style="padding-top: 4px;">Sign Up with Google</span>
+        </button>
+      </ion-row>
+      <ion-row>
+        <div class="error">
+          <div
+            *ngIf="
+              registerForm.controls['firstname'].dirty &&
+              registerForm.controls['firstname'].invalid
+            "
+          >
+            First Name must have at least 3 characters
+          </div>
+          <div
+            *ngIf="
+              registerForm.controls['lastname'].dirty &&
+              registerForm.controls['lastname'].invalid
+            "
+          >
+            Last Name must have at least 3 characters
+          </div>
+          <div
+            *ngIf="
+              registerForm.controls['email'].dirty &&
+              registerForm.controls['email'].invalid
+            "
+          >
+            Email is incorrect
+          </div>
+          <div
+            *ngIf="
+              registerForm.controls['password'].dirty &&
+              registerForm.controls['password'].invalid
+            "
+          >
+            Password must be 6 characters or more
+          </div>
+          <div
+            *ngIf="
+              registerForm.controls['city'].dirty &&
+              registerForm.controls['city'].invalid
+            "
+          >
+            City is required
+          </div>
+        </div>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

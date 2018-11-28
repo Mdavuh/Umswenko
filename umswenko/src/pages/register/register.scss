@@ -1,0 +1,44 @@
+page-register {
+  .logo img {
+    width: 10%;
+    display: block;
+    margin: auto;
+    margin-top: 0px;
+  }
+
+  .content {
+    background: url('./../assets/imgs/register.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .text-section {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+  }
+
+ 
+  .white-text {
+      color: white;
+      font-size: 14px;
+  }
+
+  .button-inner {
+      color: white !important;
+      text-transform: capitalize;
+  }
+
+  .error {
+    color: red;
+  }
+
+  .select-text {
+      color: white !important;
+      font-size: 14px !important;
+  }
+
+  ion-item{
+    background-color:rgba(0,0,0,0.5) !important;
+  }
+
+}

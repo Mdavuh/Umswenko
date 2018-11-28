@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="dark" id="navbar">
+    <ion-buttons>
+        <button ion-button icon-only color="button-color">
+          <ion-icon name="menu"></ion-icon>
+        </button>        
+    </ion-buttons>
+  
+    <ion-buttons end>
+      <button ion-button icon-only color="button-color">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only color="button-color">
+        <ion-icon name="heart"></ion-icon>
+      </button>
+      <button ion-button icon-only color="button-color">
+        <ion-icon name="cart"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <div class="citylist">   
+    <ion-list>
+      <ion-item>
+        <ion-label><span style="font-size: 14px;">Select City:</span></ion-label>
+        <ion-select [(ngModel)]="city" (ionChange)="filterData($event)">
+          <ion-option *ngFor="let c of cityArray" value="{{c.city}}">{{c.city}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngFor="let feed of feedsArray" class="feed">
+    <div class="picture">
+      <img src="{{feed.images.imageUrl}}" alt="image">
+      <div class="caption designer">{{feed.designer.designerName | uppercase}}</div>
+    </div>
+    <div class="designer">
+      <span>{{feed.images.caption | titlecase}}</span>
+    </div>
+    <div class="message">
+      <span>{{feed.message | lowercase}}</span>
+    </div>
+    <div class="button-area">
+      <button ion-button  outline color="button-color">SEE MORE</button>
+    </div>
+  </div>
+</ion-content>

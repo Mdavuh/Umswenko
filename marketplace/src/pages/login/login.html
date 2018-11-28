@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <img src="assets/imgs/marketplace.png" alt="logo" class="logo">
+
+  <form [formGroup]="loginForm" novalidate>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label floating>Email Address</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+          <ion-item text-wrap class="error">           
+            <div *ngIf="loginForm.controls['email'].dirty &&
+                  loginForm.controls['email'].invalid">
+              Email is incorrect.
+            </div>
+            <div *ngIf="loginForm.controls['password'].dirty &&
+                  loginForm.controls['password'].invalid">
+              Password should be 8 Character long.
+            </div>           
+          </ion-item>
+      </ion-card-content>
+      <ion-row>
+        <div>
+          <button ion-button (click)="navigateToPage('RegisterPage')" color="secondary">Register</button>
+          <button ion-button (click)="login()" [disabled]="loginForm.invalid">Login</button>
+        </div>
+      </ion-row>
+    </ion-card>
+  </form>
+
+</ion-content>
