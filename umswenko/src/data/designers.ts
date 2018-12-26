@@ -2,7 +2,7 @@ import { UserProfile } from '../models/userprofile/profile';
 
 export const DESIGNERS: UserProfile[] = [
   {
-    id: '100',
+    userid: '100',
     userName: 'mxolisi@gmail.com',
     password: 'mxolisi',
     userType: 'designer',
@@ -19,7 +19,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '101',
+    userid: '101',
     userName: 'dudumapolisa@outlook.com',
     password: 'dudumapolisa',
     userType: 'designer',
@@ -37,7 +37,7 @@ export const DESIGNERS: UserProfile[] = [
   },
 
   {
-    id: '102',
+    userid: '102',
     userName: 'malusizwane@gmail.com',
     password: 'malusizwane',
     userType: 'designer',
@@ -54,7 +54,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '103',
+    userid: '103',
     userName: 'nomusam@yahoo.com',
     password: 'nomusam',
     userType: 'designer',
@@ -71,7 +71,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '104',
+    userid: '104',
     userName: 'zintlengubane@zintlenista.co.za',
     password: 'zintlengubane',
     userType: 'designer',
@@ -88,7 +88,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '200',
+    userid: '200',
     userName: 'vincentn@gmail.com',
     password: 'vincentn',
     userType: 'designer',
@@ -105,7 +105,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '201',
+    userid: '201',
     userName: 'ellanafrica@outlook.com',
     password: 'ellanafrica',
     userType: 'designer',
@@ -123,7 +123,7 @@ export const DESIGNERS: UserProfile[] = [
   },
 
   {
-    id: '202',
+    userid: '202',
     userName: 'mikemoeketsi@gmail.com',
     password: 'mikemoeketsi',
     userType: 'designer',
@@ -140,7 +140,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '203',
+    userid: '203',
     userName: 'janekwembu@yahoo.com',
     password: 'janekwembu',
     userType: 'designer',
@@ -157,7 +157,7 @@ export const DESIGNERS: UserProfile[] = [
     deactivatedDate: null
   },
   {
-    id: '204',
+    userid: '204',
     userName: 'whiteymbomvu@mbovuness.co.za',
     password: 'whiteymbomvu',
     userType: 'designer',

@@ -1,18 +1,68 @@
-<!--
-  Generated template for the LoginPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>LoginPage</ion-title>
-  </ion-navbar>
-
+  <ion-navbar transparent> </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
+  <div class="text-section">
+    <span style="color: #e66767; font-weight: bold; font-size: 25px;">U</span>
+    <span style="color: white; font-weight: bold; font-size: 20px;">MSWENKO</span>
+  </div>
+  <div>
+    <ion-row>
+      <button ion-button clear full style="color: white; font-size: 14px;" (click)="openPage('RegisterPage')">
+        Don't have an account? Register
+      </button>
+    </ion-row>
+  </div>
 
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="input-section">
+      
+      <ion-item>
+        <ion-input placeholder="Email" type="email" class="white-text" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input placeholder="Password" type="password" class="white-text" formControlName="password"></ion-input>
+      </ion-item>  
+    </div>
+
+    <div class="login-buttons">
+      <ion-grid>
+        <ion-row>
+          <button ion-button icon-start color="button-color" style="margin-top: 20px" full type="submit" [disabled]="loginForm.invalid">
+            <ion-icon name="md-unlock"></ion-icon>
+            <span style="padding-top: 4px;">Sign In</span>
+          </button>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </form>
+
+  <div class="login-buttons">
+    <ion-grid>
+      <ion-row>
+        <button ion-button icon-start color="button-color" full outline style="margin-top: 20px; background-color:rgba(0,0,0,0.5) !important" (click)="loginGoogle()">
+          <ion-icon name="logo-googleplus"></ion-icon>
+          <span style="padding-top: 4px;">Sign In with Google</span>
+        </button>
+      </ion-row>
+      <ion-row>
+        <div class="error">          
+          <div *ngIf="
+              loginForm.controls['email'].dirty &&
+              loginForm.controls['email'].invalid
+            ">
+            Email is incorrect
+          </div>
+          <div *ngIf="
+              loginForm.controls['password'].dirty &&
+              loginForm.controls['password'].invalid
+            ">
+            Password must be 6 characters or more
+          </div>       
+        </div>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

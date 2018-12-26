@@ -17,9 +17,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
 import {AngularFireModule} from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import firebase from 'firebase';
 import { ToastServiceProvider } from '../providers/toast-service/toast-service';
+import { ProfileServiceProvider } from '../providers/profile-service/profile-service';
+import { ProfileDbServiceProvider } from '../providers/profile-db-service/profile-db-service';
 
 
 var config = {
@@ -45,6 +48,7 @@ firebase.firestore().settings({
             HttpClientModule, 
             IonicModule.forRoot(MyApp), 
             AngularFireModule.initializeApp(config),
+            AngularFireDatabaseModule,
             IonicStorageModule.forRoot()
             ],
   bootstrap: [IonicApp],
@@ -54,7 +58,9 @@ firebase.firestore().settings({
     SplashScreen,
     GooglePlus,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    ToastServiceProvider
+    ToastServiceProvider,
+    ProfileServiceProvider,
+    ProfileDbServiceProvider
   ]
 })
 export class AppModule {}

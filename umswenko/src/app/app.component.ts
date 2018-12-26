@@ -10,30 +10,43 @@ import { TabsPage } from '../pages/tabs/tabs';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = "FilterPage";
+  rootPage: any;
+  platform: any;
+  statusBar: any;
+  splashScreen: any;
 
   constructor(platform: Platform, 
     statusBar: StatusBar, 
     splashScreen: SplashScreen,
     storage: Storage) {
-    
+    this.platform = platform;
+    this.statusBar = statusBar;
+    this.splashScreen = splashScreen;
     storage
       .get('is_logged_in')
       .then(val => {
         if (val == 'true'){
-          this.rootPage = TabsPage;
+          //this.rootPage = TabsPage;
+          this.rootPage = 'FilterPage';
+          this.loadPlatform();
+        }else{
+          this.rootPage = 'FilterPage';
         }
       })
       .catch(err => {
+        //this.rootPage = 'FilterPage';
         this.rootPage = 'FilterPage';
-      });  
-      
+        this.loadPlatform();
+      });      
 
-    platform.ready().then(() => {
+  }
+
+  loadPlatform(){
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
   }
 }

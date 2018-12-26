@@ -1,3 +1,5 @@
+import { UserProfile } from './../../models/userprofile/profile';
+import { CustPreferences } from './../../models/userprofile/custpreferences';
 import { Component } from '@angular/core';
 import {
   IonicPage,
@@ -18,6 +20,9 @@ import { HttpClient } from '@angular/common/http';
 import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 import { Storage } from '@ionic/storage';
 import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
+import { ProfileServiceProvider } from '../../providers/profile-service/profile-service';
+import { stringify } from '@angular/compiler/src/util';
+import { ProfileDbServiceProvider } from '../../providers/profile-db-service/profile-db-service';
 
 @IonicPage()
 @Component({
@@ -35,6 +40,8 @@ export class RegisterPage {
   registerForm: FormGroup;
   loading: any;
   user: any = {};
+  custPreferences: CustPreferences;
+  profile: UserProfile;
 
   constructor(
     public navCtrl: NavController,
@@ -45,7 +52,9 @@ export class RegisterPage {
     private loadingCtrl: LoadingController,
     private googlePlus: GooglePlus,
     private http: HttpClient,
-    private storage: Storage
+    private storage: Storage,
+    private profileService: ProfileServiceProvider,
+    private profServ: ProfileDbServiceProvider
   ) {
     for (let c of CITIES) {
       this.cityArray.push(c);
@@ -100,31 +109,8 @@ export class RegisterPage {
           })
           .then(res => {
             this.loading.dismiss();
-
-            let date = new Date();            
-
-            this.storage.set('name',  this.name);
-            this.storage.set('email', this.email);
-            this.storage.set('last_login_datetime', date.toString() );
-            this.storage.set('is_logged_in','true');     
-            this.storage.set('city',this.city);     
-
-            console.log('Profile Updated');
-
-            this.alertCtrl
-              .create({
-                title: 'Account Created',
-                message: 'Your account has been created successfully.',
-                buttons: [
-                  {
-                    text: 'OK',
-                    handler: () => {
-                      this.openPage('HomePage');
-                    }
-                  }
-                ]
-              })
-              .present();
+            this.setLocalStoroge();
+            this.createProfile(newUser.uid, 'email');
           })
           .catch(err => {
             console.log(err);
@@ -151,28 +137,20 @@ export class RegisterPage {
         })
         .then(res => {
           console.log(res);
+
           this.name = res.displayName;
           this.email = res.email;
+          this.firstName = res.givenName;
+          this.lastName = res.familyName;
+
           firebase
             .auth()
             .signInWithCredential(
               firebase.auth.GoogleAuthProvider.credential(res.idToken)
             )
             .then(suc => {
-              this.alertCtrl
-                .create({
-                  title: 'Sign-Up Successful',
-                  message: 'Sign-Up Successful for ' + this.email,
-                  buttons: [
-                    {
-                      text: 'OK',
-                      handler: () => {
-                        this.openPage('HomePage');
-                      }
-                    }
-                  ]
-                })
-                .present();
+              this.setLocalStoroge();
+              this.createProfile(suc.uid, 'google');
             });
         })
         .catch(err => {
@@ -186,6 +164,86 @@ export class RegisterPage {
   getData() {
     let token = this.user.token;
     this.http.get('');
+  }
+
+  setLocalStoroge() {
+    console.log('Started Storage');
+    let date = new Date();
+    this.storage.set('name', this.name);
+    this.storage.set('email', this.email);
+    this.storage.set('last_login_datetime', date.toString());
+    this.storage.set('is_logged_in', 'true');
+    this.storage.set('city', this.city);
+    console.log('Finished Storage');
+  }
+
+  createProfile(userid: any, loginType: string) {
+    let message: string;
+    let title: string;
+
+    let date = new Date();
+
+    console.log('Started Profile');
+    console.log('userid: ' + userid);
+    console.log('loginType: ' + loginType);
+
+    this.custPreferences = {
+      city: this.city,
+      gender: 'undefined',
+      outfit_type: 'undefined',
+      occasion: 'undefined'
+    };
+
+    this.profile = {
+      userid: userid,
+      userName: this.email,
+      password: this.password,
+      userType: 'customer',
+      loginType: loginType,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      gender: 'undefined',
+      city: this.city,
+      designerName: 'undefined',
+      preferences: this.custPreferences,
+      active: true,
+      registeredDate: date,
+      activatedDate: date,
+      deactivatedDate: null
+    };
+
+    if (loginType == 'email') {
+      title = 'Account Created';
+      message = 'Your account has been created successfully.';
+    } else {
+      title = 'Sign-Up Successful';
+      message = 'Sign - Up Successful for ' + this.email;
+    }
+
+    console.log('titlel: ' + title);
+    console.log('titlel: ' + message);   
+
+    this.profServ.postProfile(this.profile).subscribe(
+      res => {
+        this.alertCtrl
+          .create({
+            title: title,
+            message: message,
+            buttons: [
+              {
+                text: 'OK',
+                handler: () => {
+                  this.openPage('HomePage');
+                }
+              }
+            ]
+          })
+          .present();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   openPage(page: string) {
