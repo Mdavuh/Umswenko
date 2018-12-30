@@ -21,8 +21,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import firebase from 'firebase';
 import { ToastServiceProvider } from '../providers/toast-service/toast-service';
-import { ProfileServiceProvider } from '../providers/profile-service/profile-service';
 import { ProfileDbServiceProvider } from '../providers/profile-db-service/profile-db-service';
+import { NetworkServiceProvider } from '../providers/network-service/network-service';
+import { Network } from '@ionic-native/network';
 
 
 var config = {
@@ -59,8 +60,9 @@ firebase.firestore().settings({
     GooglePlus,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ToastServiceProvider,
-    ProfileServiceProvider,
-    ProfileDbServiceProvider
+    ProfileDbServiceProvider,
+    NetworkServiceProvider,
+    Network
   ]
 })
 export class AppModule {}

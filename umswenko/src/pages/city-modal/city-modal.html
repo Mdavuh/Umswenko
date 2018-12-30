@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Select City</ion-title> 
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="content">
+  <div class="logo">
+    <img src="./../assets/icon/icon.png" alt="">
+  </div>
+    <div class="inner-margins">
+      <div class="list">
+        <ion-list>
+          <ion-item>
+            <ion-label><span style="color: white">Select City:</span></ion-label>
+            <ion-select [(ngModel)]="city">
+              <ion-option *ngFor="let c of cityArray" value="{{c.city}}">{{c.city}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <div class="button">
+      <button ion-button color="button-color" full (click)="closeModal()">OK</button>
+    </div>
+</ion-content>

@@ -7,7 +7,10 @@ import {
   NavParams,
   ToastController,
   AlertController,
-  LoadingController
+  LoadingController,
+  Modal,
+  ModalController,
+  ModalOptions
 } from 'ionic-angular';
 import { CITIES } from '../../constants';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +23,6 @@ import { HttpClient } from '@angular/common/http';
 import { ToastServiceProvider } from '../../providers/toast-service/toast-service';
 import { Storage } from '@ionic/storage';
 import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
-import { ProfileServiceProvider } from '../../providers/profile-service/profile-service';
 import { stringify } from '@angular/compiler/src/util';
 import { ProfileDbServiceProvider } from '../../providers/profile-db-service/profile-db-service';
 
@@ -53,8 +55,8 @@ export class RegisterPage {
     private googlePlus: GooglePlus,
     private http: HttpClient,
     private storage: Storage,
-    private profileService: ProfileServiceProvider,
-    private profServ: ProfileDbServiceProvider
+    private profServ: ProfileDbServiceProvider,
+    private modal: ModalController
   ) {
     for (let c of CITIES) {
       this.cityArray.push(c);
@@ -126,9 +128,21 @@ export class RegisterPage {
   }
 
   loginGoogle() {
-    this.city = this.registerForm.controls['city'].value;
+    const myModalOptions: ModalOptions = {
+      enableBackdropDismiss: false
+    };
 
-    if (this.city) {
+    const myModal: Modal = this.modal.create(
+      'CityModalPage',
+      { data: this.cityArray },
+      myModalOptions
+    );
+    myModal.present();
+
+    myModal.onDidDismiss(data => {
+      console.log('I have dismissed');
+      console.log(data);
+      this.city = data;
       this.googlePlus
         .login({
           webClientId:
@@ -156,9 +170,7 @@ export class RegisterPage {
         .catch(err => {
           this.toastServ.showToast(err.message, 3000);
         });
-    } else {
-      this.toastServ.showToast('Please select a City', 3000);
-    }
+    });
   }
 
   getData() {
@@ -221,7 +233,7 @@ export class RegisterPage {
     }
 
     console.log('titlel: ' + title);
-    console.log('titlel: ' + message);   
+    console.log('titlel: ' + message);
 
     this.profServ.postProfile(this.profile).subscribe(
       res => {
@@ -242,6 +254,7 @@ export class RegisterPage {
       },
       err => {
         console.log(err);
+        this.toastServ.showToast(err.message, 3000);
       }
     );
   }

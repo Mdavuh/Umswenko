@@ -1,8 +1,9 @@
+import { NetworkServiceProvider } from './../providers/network-service/network-service';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -18,7 +19,9 @@ export class MyApp {
   constructor(platform: Platform, 
     statusBar: StatusBar, 
     splashScreen: SplashScreen,
-    storage: Storage) {
+    storage: Storage,
+    networkService: NetworkServiceProvider) {
+    networkService.initializeNetwork();
     this.platform = platform;
     this.statusBar = statusBar;
     this.splashScreen = splashScreen;
@@ -49,4 +52,5 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
+ 
 }
