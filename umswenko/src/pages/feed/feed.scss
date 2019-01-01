@@ -1,3 +1,68 @@
 page-feed {
 
+   .content {
+    background-image: url('../../assets/imgs/confectionary.png');
+    background-repeat: repeat;
+  }
+    
+  ion-scroll[scrollX] {
+    white-space: nowrap;
+    height: 140px;
+    overflow: hidden;
+    .scroll-item {
+      display: inline-block;
+    }
+  }
+
+  ion-scroll[scroll-avatar] {
+    height: 85px;
+  }
+
+  /* Hide ion-content scrollbar */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .avatar-container {
+    width: 80px;
+    text-align: center;
+  }
+
+  .avatar {
+    vertical-align: middle;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 4px solid #3498db;
+  }
+
+  .avatar-card {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid #e74c3c;
+  }
+
+  .name-text {
+    font-size: 12px;
+    color: #303952;
+  }
+
+  .heading-text {
+    font-size: 20px;
+    color: #303952;
+    font-weight: bold;
+  }
+
+  .text-container {
+    text-align: center;
+  }
+
+  .card-img {
+    height: 95%;
+    width: 95%;
+  }
+
+
 }

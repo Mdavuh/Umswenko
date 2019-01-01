@@ -29,16 +29,17 @@ export class MyApp {
       .get('is_logged_in')
       .then(val => {
         if (val == 'true'){
-          //this.rootPage = TabsPage;
-          this.rootPage = 'FilterPage';
+          this.rootPage = 'FeedPage';
+          //this.rootPage = TabsPage;     
           this.loadPlatform();
         }else{
-          this.rootPage = 'FilterPage';
+          //this.rootPage = 'FilterPage';
+          this.rootPage = 'FeedPage';
         }
       })
       .catch(err => {
         //this.rootPage = 'FilterPage';
-        this.rootPage = 'FilterPage';
+        this.rootPage = 'FeedPage';
         this.loadPlatform();
       });      
 
