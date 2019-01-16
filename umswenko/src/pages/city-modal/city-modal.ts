@@ -22,7 +22,8 @@ export class CityModalPage {
               private view: ViewController,
               public toastServ: ToastServiceProvider) {
     this.cityArray = this.navParams.get('data');
-    console.log(this.cityArray);
+    this.city = this.navParams.get('city');
+
   }
 
   ionViewDidLoad() {

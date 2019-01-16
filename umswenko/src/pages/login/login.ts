@@ -134,7 +134,8 @@ export class LoginPage {
               active: true,
               registeredDate: date,
               activatedDate: date,
-              deactivatedDate: null
+              deactivatedDate: null,
+              imageUrl: null
             };
 
             let newProfile = this.profServ.postProfile(this.profile).subscribe(
@@ -149,7 +150,7 @@ export class LoginPage {
                 console.log(
                   'Post Profile Observer got a complete notification'
                 );
-                this.setLocalStoroge(date);
+                this.setLocalStoroge(date, this.profile.loginType);
                 this.alertCtrl
                   .create({
                     title: 'Sign-In Successful',
@@ -176,7 +177,7 @@ export class LoginPage {
           this.lastName = this.profileData.lastName;
           this.name = this.profileData.firstName + ' ' + this.lastName;
           this.city = this.profileData.city;
-          this.setLocalStoroge(date);
+          this.setLocalStoroge(date, this.profileData.loginType);
           console.log('profile exists!!!');
           console.log(data);
           this.alertCtrl
@@ -198,13 +199,14 @@ export class LoginPage {
     );
   }
 
-  setLocalStoroge(date: Date) {
+  setLocalStoroge(date: Date, loginType: string) {
     console.log('Started Storage');
     this.storage.set('name', this.name);
     this.storage.set('email', this.email);
     this.storage.set('last_login_datetime', date);
     this.storage.set('is_logged_in', 'true');
     this.storage.set('city', this.city);
+    this.storage.set('login_type', loginType);
     console.log('Finished Storage');
   }
 
@@ -229,18 +231,23 @@ export class LoginPage {
       .auth()
       .signInWithEmailAndPassword(this.email, this.password)
       .then(user => {
-        console.log(user);
         this.loading.dismiss();
         let date = new Date();
         let data;
-
+  
         this.storage
           .get('email')
           .then(val => {
             if (val == this.email) {
               this.storage.set('last_login_datetime', date);
-            } else {
-              //retrieve values
+              this.storage.set('is_logged_in', 'true');
+              this.storage.get('name').then(val => {
+                this.name = val;
+                this.openPage('HomePage');
+              }).catch(err => {
+                this.toastServ.showToast(err.message, 3000);
+              });              
+            }else{
               let profileRes = this.profServ
                 .getProfileByUserName(this.email)
                 .subscribe(
@@ -250,6 +257,7 @@ export class LoginPage {
                       data = x;
                     } else {
                       console.log('Got nothing!');
+                      this.toastServ.showToast('Could not retrieve user profile.', 3000);
                     }
                   },
                   err => {
@@ -262,19 +270,15 @@ export class LoginPage {
                     this.lastName = data.lastName;
                     this.name = this.firstName + " " + this.lastName;
                     this.city = data.city;
-                    this.setLocalStoroge(date);
+                    this.setLocalStoroge(date, data.loginType);
                     this.openPage('HomePage');
                   }
                 );
-
-              console.log('email not found!!!');
             }
-          })
-          .catch(err => {
-            //this.rootPage = 'FilterPage';
-            console.log('Housten we got a problem!!!');
-          });
-
+            
+          }).catch(err => {
+            this.toastServ.showToast(err.message, 3000);
+          });  
         
       })
       .catch(err => {
@@ -323,7 +327,7 @@ export class LoginPage {
       this.navCtrl.push('LoginPage');
     } else if (page == 'HomePage') {
       this.toastServ.showToast('Welcome ' + this.name, 3000);
-      this.navCtrl.setRoot(TabsPage, { filterBy: this.city });
+      this.navCtrl.setRoot(TabsPage, { authinfo: true });
     } else if (page == 'RegisterPage') {
       this.navCtrl.push('RegisterPage');
     }

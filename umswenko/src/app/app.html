@@ -1,1 +1,48 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+  <ion-content class="menu-bg">
+    <ion-row class="row-style">
+      <div class="logo-menu">
+        <img src="./../assets/icon/icon.png" alt="" />
+      </div>
+    </ion-row>
+    <!--<ion-list>     
+      <button menuClose ion-item>Login</button>
+      <button menuClose ion-item>Logout</button>
+      <button menuClose ion-item>Profile</button>
+    </ion-list>-->
+    <ion-row class="row-style">
+      <button *ngIf="!is_logged_on" class="menu-button" menuClose ion-item (click)="signIn()">
+        <ion-icon name="md-log-in"></ion-icon> Sign-In
+      </button>
+      <button *ngIf="!is_logged_on" class="menu-button" menuClose ion-item (click)="register()">
+        <ion-icon name="md-clipboard"></ion-icon>
+        Register
+      </button>
+      <button *ngIf="is_logged_on"  class="menu-button" menuClose ion-item (click)="logout()">
+        <ion-icon name="md-log-out"></ion-icon>
+        Logout
+      </button>
+      <button class="menu-button" menuClose ion-item>
+        <ion-icon name="md-person"></ion-icon>
+        Profile
+      </button>
+    <button class="menu-button" menuClose ion-item>
+        <ion-icon name="help-buoy"></ion-icon>
+        Help
+    </button>
+    </ion-row>
+    <ion-row>
+      <span
+        style="padding-top: 12px; padding-left: 40px; color: #ecf0f1; font-size: 10px"
+        >Version 0.0.1</span
+      >    
+    </ion-row>
+        <ion-row>
+            <span style="padding-top: 12px; padding-left: 40px; color: #ecf0f1; font-size: 10px">Powered by Smartwist</span>
+        </ion-row>
+
+  </ion-content>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

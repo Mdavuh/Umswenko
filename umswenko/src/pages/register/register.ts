@@ -25,6 +25,7 @@ import { Storage } from '@ionic/storage';
 import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
 import { stringify } from '@angular/compiler/src/util';
 import { ProfileDbServiceProvider } from '../../providers/profile-db-service/profile-db-service';
+import * as firebaseAuth from 'firebase/auth';
 
 @IonicPage()
 @Component({
@@ -44,6 +45,7 @@ export class RegisterPage {
   user: any = {};
   custPreferences: CustPreferences;
   profile: UserProfile;
+  firebaseDb: firebaseAuth;
 
   constructor(
     public navCtrl: NavController,
@@ -72,7 +74,7 @@ export class RegisterPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+
   }
 
   onSubmit() {
@@ -99,19 +101,16 @@ export class RegisterPage {
       this.name = this.firstName + ' ' + this.lastName;
     }
 
-    firebase
+    this.firebaseDb = firebase
       .auth()
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(data => {
-        let newUser: firebase.User = data.user;
+        let newUser: firebase.User = data.user;     
         newUser
-          .updateProfile({
-            displayName: this.name,
-            photoURL: ''
-          })
+          .updateProfile({ displayName: this.name, photoURL: '' })
           .then(res => {
             this.loading.dismiss();
-            this.setLocalStoroge();
+            this.setLocalStoroge('email');
             this.createProfile(newUser.uid, 'email');
           })
           .catch(err => {
@@ -157,13 +156,13 @@ export class RegisterPage {
           this.firstName = res.givenName;
           this.lastName = res.familyName;
 
-          firebase
+          this.firebaseDb = firebase
             .auth()
             .signInWithCredential(
               firebase.auth.GoogleAuthProvider.credential(res.idToken)
             )
             .then(suc => {
-              this.setLocalStoroge();
+              this.setLocalStoroge('gmail');
               this.createProfile(suc.uid, 'google');
             });
         })
@@ -172,13 +171,9 @@ export class RegisterPage {
         });
     });
   }
+ 
 
-  getData() {
-    let token = this.user.token;
-    this.http.get('');
-  }
-
-  setLocalStoroge() {
+  setLocalStoroge(loginType: string) {
     console.log('Started Storage');
     let date = new Date();
     this.storage.set('name', this.name);
@@ -186,7 +181,7 @@ export class RegisterPage {
     this.storage.set('last_login_datetime', date.toString());
     this.storage.set('is_logged_in', 'true');
     this.storage.set('city', this.city);
-    console.log('Finished Storage');
+    this.storage.set('login_type', loginType);
   }
 
   createProfile(userid: any, loginType: string) {
@@ -221,7 +216,8 @@ export class RegisterPage {
       active: true,
       registeredDate: date,
       activatedDate: date,
-      deactivatedDate: null
+      deactivatedDate: null,
+      imageUrl: null
     };
 
     if (loginType == 'email') {
@@ -231,9 +227,6 @@ export class RegisterPage {
       title = 'Sign-Up Successful';
       message = 'Sign - Up Successful for ' + this.email;
     }
-
-    console.log('titlel: ' + title);
-    console.log('titlel: ' + message);
 
     this.profServ.postProfile(this.profile).subscribe(
       res => {
@@ -260,11 +253,14 @@ export class RegisterPage {
   }
 
   openPage(page: string) {
+    console.log('inside firebase: 1');
+    this.firebaseDb = firebase.auth.EmailAuthProvider_Instance;
+    console.log(this.firebaseDb);
     if (page == 'LoginPage') {
       this.navCtrl.push('LoginPage');
     } else if (page == 'HomePage') {
       this.toastServ.showToast('Welcome ' + this.name, 3000);
-      this.navCtrl.setRoot(TabsPage, { filterBy: this.city });
+      this.navCtrl.setRoot(TabsPage, { authinfo: true });
     } else if (page == 'RegisterPage') {
       this.navCtrl.push('RegisterPage');
     }

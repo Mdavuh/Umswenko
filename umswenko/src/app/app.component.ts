@@ -1,9 +1,12 @@
 import { NetworkServiceProvider } from './../providers/network-service/network-service';
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, NavController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+import { AuthProvider } from '../providers/auth/auth';
+import { ToastServiceProvider } from '../providers/toast-service/toast-service';
+
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -15,37 +18,51 @@ export class MyApp {
   platform: any;
   statusBar: any;
   splashScreen: any;
+  public is_logged_on: boolean = false;
+  emailType: string;
+  authProvider: AuthProvider;
+  @ViewChild('content') nav: NavController;
+  store: Storage;
+  toastServ: ToastServiceProvider;
 
-  constructor(platform: Platform, 
-    statusBar: StatusBar, 
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
     splashScreen: SplashScreen,
     storage: Storage,
-    networkService: NetworkServiceProvider) {
+    networkService: NetworkServiceProvider,
+    authService: AuthProvider,
+    public events: Events
+  ) {
     networkService.initializeNetwork();
     this.platform = platform;
     this.statusBar = statusBar;
     this.splashScreen = splashScreen;
+    this.authProvider = authService;
+
+    events.subscribe('user:authinfo', (authinfo, time) => {
+      console.log('User Log Info: ', authinfo, 'at', time);
+      this.is_logged_on = authinfo;
+    });
+
     storage
       .get('is_logged_in')
       .then(val => {
-        if (val == 'true'){
-          this.rootPage = 'FeedPage';
-          //this.rootPage = TabsPage;     
+        if (val == 'true') {
+          this.rootPage = TabsPage;
           this.loadPlatform();
-        }else{
-          //this.rootPage = 'FilterPage';
-          this.rootPage = 'FeedPage';
+        } else {
+          this.rootPage = 'FilterPage';
+          this.loadPlatform();
         }
       })
       .catch(err => {
-        //this.rootPage = 'FilterPage';
-        this.rootPage = 'FeedPage';
+        this.rootPage = 'FilterPage';
         this.loadPlatform();
-      });      
-
+      });
   }
 
-  loadPlatform(){
+  loadPlatform() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -53,5 +70,29 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
- 
+
+  logout() {
+    console.log('got to logout bro!!!');
+    this.authProvider.getStorageValues().subscribe(
+      x => {
+        console.log('Logout Observer got a next value: ' + x);
+      },
+      err => {
+        console.error('Logout Observer got an error: ' + err);
+        this.toastServ.showToast(err.message, 3000);
+      },
+      () => {
+        this.is_logged_on = false;
+        this.nav.setRoot('FilterPage');
+      }
+    );    
+  }
+
+  signIn(){
+    this.nav.push('LoginPage');
+  }
+
+  register(){
+    this.nav.push('RegisterPage');
+  }
 }

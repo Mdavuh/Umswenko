@@ -1,10 +1,11 @@
 import { Images } from './images';
-import { UserProfile } from '../userprofile/profile';
 
 export interface Feed {
-  Id: String;
-  designer: UserProfile;
-  images: Images;
-  message: String;
+  Id: string;
+  designer: string;
+  designerFirstName: string;
+  designerLastName: string;
+  images: [{id:string, imageUrl:string}];
+  message: string;
   createdDate: Date;
 }

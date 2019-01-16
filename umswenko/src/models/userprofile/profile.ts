@@ -18,4 +18,5 @@ export interface UserProfile {
   registeredDate: Date;
   activatedDate: Date;
   deactivatedDate: Date;
+  imageUrl: string;
 }

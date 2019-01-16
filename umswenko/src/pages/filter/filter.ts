@@ -23,7 +23,7 @@ export class FilterPage {
     for (let c of CITIES) {
       this.cityArray.push(c);
     }
-    this.testNetwork();
+    
   }
 
   openPage(page: string){
@@ -32,7 +32,13 @@ export class FilterPage {
       this.navCtrl.push("LoginPage");
     }else if (page == "HomePage"){    
       if (this.city){
-        this.navCtrl.setRoot(TabsPage, { filterBy: this.city });
+
+        let data = {
+          authinfo: false,
+          city: this.city
+        }
+        
+        this.navCtrl.setRoot(TabsPage, { data });
       }else{
         this.toastServ.showToast('Please select a city', 3000);
       }      
@@ -41,24 +47,5 @@ export class FilterPage {
     }
     
   }
-
-  testNetwork(): void {
-    this.networkService.initializeNetwork();
-    this.networkService.getNetworkStatus().subscribe((connected: boolean) => {
-      console.log('network test result the first: ' + connected);
-      this.isConnected = connected;
-    },err =>{
-      console.log('Network err: '  + err.message);
-    },() => {
-      console.log('Completed!!')
-    });
-    console.log('network test result: ' + this.isConnected);
-    console.log('Network Type: ' + this.networkService.getNetworkType());
-
-    this.networkService.getNetworkStatus().subscribe(data =>{
-      console.log('and we tried');
-      console.log(data);
-    })
-  }
-  
+ 
 }

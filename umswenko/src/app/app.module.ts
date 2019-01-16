@@ -7,6 +7,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { FeedPage } from '../pages/feed/feed';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +25,7 @@ import { ToastServiceProvider } from '../providers/toast-service/toast-service';
 import { ProfileDbServiceProvider } from '../providers/profile-db-service/profile-db-service';
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
 import { Network } from '@ionic-native/network';
-
+import { AuthProvider } from '../providers/auth/auth';
 
 var config = {
   apiKey: 'AIzaSyC-yRjF7Ztj2zbKUzlxDutLyYQVwsW6kOw',
@@ -43,7 +44,8 @@ firebase.firestore().settings({
   declarations: [MyApp, 
                  AboutPage, 
                  ContactPage, 
-                 HomePage, 
+                 HomePage,
+                 FeedPage, 
                  TabsPage],
   imports: [BrowserModule, 
             HttpClientModule, 
@@ -53,7 +55,7 @@ firebase.firestore().settings({
             IonicStorageModule.forRoot()
             ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, AboutPage, ContactPage, HomePage, TabsPage],
+  entryComponents: [MyApp, AboutPage, ContactPage, HomePage, FeedPage, TabsPage],
   providers: [
     StatusBar,
     SplashScreen,
@@ -62,7 +64,8 @@ firebase.firestore().settings({
     ToastServiceProvider,
     ProfileDbServiceProvider,
     NetworkServiceProvider,
-    Network
+    Network,
+    AuthProvider
   ]
 })
 export class AppModule {}

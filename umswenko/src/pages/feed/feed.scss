@@ -1,9 +1,10 @@
-page-feed {
 
-   .content {
-    background-image: url('../../assets/imgs/confectionary.png');
-    background-repeat: repeat;
+page-feed {
+  
+  ion-navbar.toolbar {
+    min-height: 30px;
   }
+
     
   ion-scroll[scrollX] {
     white-space: nowrap;
@@ -15,7 +16,7 @@ page-feed {
   }
 
   ion-scroll[scroll-avatar] {
-    height: 85px;
+    height: 100px;
   }
 
   /* Hide ion-content scrollbar */
@@ -24,35 +25,46 @@ page-feed {
   }
 
   .avatar-container {
-    width: 80px;
+    width: 100px;
     text-align: center;
   }
 
   .avatar {
     vertical-align: middle;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
+    padding: 2px;
     border-radius: 50%;
     border: 4px solid #3498db;
   }
 
   .avatar-card {
     vertical-align: middle;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    padding: 2px;
     border: 4px solid #e74c3c;
   }
 
   .name-text {
-    font-size: 12px;
+    font-family: Rambia;
+    font-size: 14px;
     color: #303952;
   }
 
   .heading-text {
+    font-size: 30px;
+    color: #303952;
+    font-weight: bold;
+    font-family: Pacifico;
+  }
+
+  .subheading-text{
     font-size: 20px;
     color: #303952;
     font-weight: bold;
+    font-family: Rambia;
   }
 
   .text-container {
@@ -65,4 +77,4 @@ page-feed {
   }
 
 
-}
+ }

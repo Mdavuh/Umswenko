@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -15,18 +14,52 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-
-@font-face{
-    font-family: Pacifico;
-    src: url('../assets/fonts/Pacifico-Regular.ttf') format('truetype');
+@font-face {
+  font-family: Pacifico;
+  src: url('../assets/fonts/Pacifico-Regular.ttf') format('truetype');
 }
 
-@font-face{
-    font-family: Cuprum;
-    src: url('../assets/fonts/Cuprum-Regular.ttf') format('truetype');
+@font-face {
+  font-family: Cuprum;
+  src: url('../assets/fonts/Cuprum-Regular.ttf') format('truetype');
 }
 
-@font-face{
-    font-family: Rambia;
-    src: url('../assets/fonts/Rambla-Regular.ttf') format('truetype');
+@font-face {
+  font-family: Rambia;
+  src: url('../assets/fonts/Rambla-Regular.ttf') format('truetype');
+}
+
+.tabs .tabbar {
+  background-color: #fff;
+}
+
+.menu-bg {
+  background-image: linear-gradient(to bottom right, #303952, #e66767);
+}
+
+.logo-menu img {
+  width: 20%;
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  padding-bottom: 10px;
+}
+
+.menu-button ion-icon {
+    color: #ecf0f1;
+}
+
+.menu-button {
+    background: none;
+    color: #ecf0f1;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+ .menu-button .item-inner {
+    border-bottom: none !important;
+}
+
+.row-style {
+    border-bottom: 1px solid #e66767;
 }

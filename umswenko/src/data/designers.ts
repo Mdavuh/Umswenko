@@ -16,7 +16,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer10.jpg'
   },
   {
     userid: '101',
@@ -33,7 +34,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer1.jpg'
   },
 
   {
@@ -51,7 +53,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer9.jpg'
   },
   {
     userid: '103',
@@ -68,7 +71,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer2.jpg'
   },
   {
     userid: '104',
@@ -85,7 +89,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer3.jpg'
   },
   {
     userid: '200',
@@ -102,7 +107,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer8.jpg'
   },
   {
     userid: '201',
@@ -119,7 +125,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer7.jpg'
   },
 
   {
@@ -137,7 +144,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer6.jpg'
   },
   {
     userid: '203',
@@ -154,7 +162,8 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer4.jpg'
   },
   {
     userid: '204',
@@ -171,6 +180,7 @@ export const DESIGNERS: UserProfile[] = [
     active: true,
     registeredDate: null,
     activatedDate: null,
-    deactivatedDate: null
+    deactivatedDate: null,
+    imageUrl: './../assets/imgs/thumbnails/designer5.jpg'
   }
 ];
