@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { AuthProvider } from '../providers/auth/auth';
 import { ToastServiceProvider } from '../providers/toast-service/toast-service';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -30,15 +32,20 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     storage: Storage,
-    networkService: NetworkServiceProvider,
     authService: AuthProvider,
-    public events: Events
+    public events: Events,
+    private screenOrientation: ScreenOrientation,
+    private googlePlus: GooglePlus
   ) {
-    networkService.initializeNetwork();
     this.platform = platform;
     this.statusBar = statusBar;
     this.splashScreen = splashScreen;
     this.authProvider = authService;
+
+    console.log(this.screenOrientation.type); // logs the current orientation, example: 'landscape'
+
+    // set to landscape
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
     events.subscribe('user:authinfo', (authinfo, time) => {
       console.log('User Log Info: ', authinfo, 'at', time);
@@ -82,17 +89,23 @@ export class MyApp {
         this.toastServ.showToast(err.message, 3000);
       },
       () => {
+        this.googlePlus.disconnect().then(res => {
+          console.log('Sign Out!!');
+          console.log(res);
+        }).catch(res => {
+          console.log(res);
+        })
         this.is_logged_on = false;
         this.nav.setRoot('FilterPage');
       }
-    );    
+    );
   }
 
-  signIn(){
+  signIn() {
     this.nav.push('LoginPage');
   }
 
-  register(){
+  register() {
     this.nav.push('RegisterPage');
   }
 }

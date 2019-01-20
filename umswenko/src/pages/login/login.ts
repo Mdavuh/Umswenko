@@ -233,59 +233,84 @@ export class LoginPage {
       .then(user => {
         this.loading.dismiss();
         let date = new Date();
-        let data;
-  
+
         this.storage
           .get('email')
           .then(val => {
             if (val == this.email) {
-              this.storage.set('last_login_datetime', date);
-              this.storage.set('is_logged_in', 'true');
-              this.storage.get('name').then(val => {
-                this.name = val;
-                this.openPage('HomePage');
-              }).catch(err => {
-                this.toastServ.showToast(err.message, 3000);
-              });              
-            }else{
-              let profileRes = this.profServ
-                .getProfileByUserName(this.email)
-                .subscribe(
-                  x => {
-                    console.log('Observer got a next value: ' + x);
-                    if (x) {
-                      data = x;
-                    } else {
-                      console.log('Got nothing!');
-                      this.toastServ.showToast('Could not retrieve user profile.', 3000);
-                    }
-                  },
-                  err => {
-                    console.error('Observer got an error: ' + err);
-                    this.toastServ.showToast(err.message, 3000);
-                  },
-                  () => {
-                    console.log('got profile data');
-                    this.firstName = data.firstName;
-                    this.lastName = data.lastName;
-                    this.name = this.firstName + " " + this.lastName;
-                    this.city = data.city;
-                    this.setLocalStoroge(date, data.loginType);
-                    this.openPage('HomePage');
+              this.storage
+                .get('city')
+                .then(val => {
+                  if (val) {
+                    this.city = val;
+                    this.storage
+                      .get('name')
+                      .then(val => {
+                        if (val) {
+                          this.name = val;
+                          console.log('inside get storage!!!');
+                          console.log('val: ' + val);
+                          console.log('email: ' + this.email);
+                          this.storage.set('last_login_datetime', date);
+                          this.storage.set('is_logged_in', 'true');
+                        } else {
+                          this.getProfile(date);
+                        }
+                        this.name = val;
+                        this.openPage('HomePage');
+                      })
+                      .catch(err => {
+                        this.toastServ.showToast(err.message, 3000);
+                      });
+                  } else {
+                    this.getProfile(date);
                   }
-                );
+                })
+                .catch(err => {
+                  this.toastServ.showToast(err.message, 3000);
+                });
+            } else {
+              this.getProfile(date);
             }
-            
-          }).catch(err => {
+          })
+          .catch(err => {
             this.toastServ.showToast(err.message, 3000);
-          });  
-        
+          });
       })
       .catch(err => {
         console.log(err);
         this.loading.dismiss();
         this.toastServ.showToast(err.message, 3000);
       });
+  }
+
+  getProfile(date: Date) {
+    let data;
+    console.log('inside get profiles');
+    let profileRes = this.profServ.getProfileByUserName(this.email).subscribe(
+      x => {
+        console.log('Observer got a next value: ' + x);
+        if (x) {
+          data = x;
+        } else {
+          console.log('Got nothing!');
+          this.toastServ.showToast('Could not retrieve user profile.', 3000);
+        }
+      },
+      err => {
+        console.error('Observer got an error: ' + err);
+        this.toastServ.showToast(err.message, 3000);
+      },
+      () => {
+        console.log('got profile data');
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.name = this.firstName + ' ' + this.lastName;
+        this.city = data.city;
+        this.setLocalStoroge(date, data.loginType);
+        this.openPage('HomePage');
+      }
+    );
   }
 
   loginGoogle() {
@@ -313,7 +338,8 @@ export class LoginPage {
             console.log('creating the profile');
             this.createProfile(this.email, userid);
             console.log('completed creating profile!!!');
-          }).catch(err =>{
+          })
+          .catch(err => {
             this.toastServ.showToast(err.message, 3000);
           });
       })
@@ -327,7 +353,11 @@ export class LoginPage {
       this.navCtrl.push('LoginPage');
     } else if (page == 'HomePage') {
       this.toastServ.showToast('Welcome ' + this.name, 3000);
-      this.navCtrl.setRoot(TabsPage, { authinfo: true });
+      let data = {
+        authinfo: true,
+        city: this.city
+      };
+      this.navCtrl.setRoot(TabsPage, { data });
     } else if (page == 'RegisterPage') {
       this.navCtrl.push('RegisterPage');
     }

@@ -26,6 +26,7 @@ import { ProfileDbServiceProvider } from '../providers/profile-db-service/profil
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
 import { Network } from '@ionic-native/network';
 import { AuthProvider } from '../providers/auth/auth';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 var config = {
   apiKey: 'AIzaSyC-yRjF7Ztj2zbKUzlxDutLyYQVwsW6kOw',
@@ -41,21 +42,24 @@ firebase.firestore().settings({
 });
 
 @NgModule({
-  declarations: [MyApp, 
-                 AboutPage, 
-                 ContactPage, 
-                 HomePage,
-                 FeedPage, 
-                 TabsPage],
-  imports: [BrowserModule, 
-            HttpClientModule, 
-            IonicModule.forRoot(MyApp), 
-            AngularFireModule.initializeApp(config),
-            AngularFireDatabaseModule,
-            IonicStorageModule.forRoot()
-            ],
+  declarations: [MyApp, AboutPage, ContactPage, HomePage, FeedPage, TabsPage],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule,
+    IonicStorageModule.forRoot()
+  ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, AboutPage, ContactPage, HomePage, FeedPage, TabsPage],
+  entryComponents: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    FeedPage,
+    TabsPage
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -65,7 +69,8 @@ firebase.firestore().settings({
     ProfileDbServiceProvider,
     NetworkServiceProvider,
     Network,
-    AuthProvider
+    AuthProvider,
+    ScreenOrientation
   ]
 })
 export class AppModule {}

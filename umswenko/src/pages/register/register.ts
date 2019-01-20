@@ -46,6 +46,7 @@ export class RegisterPage {
   custPreferences: CustPreferences;
   profile: UserProfile;
   firebaseDb: firebaseAuth;
+  profileData: any;
 
   constructor(
     public navCtrl: NavController,
@@ -189,67 +190,97 @@ export class RegisterPage {
     let title: string;
 
     let date = new Date();
+    let data = 'undefined';
 
-    console.log('Started Profile');
-    console.log('userid: ' + userid);
-    console.log('loginType: ' + loginType);
-
-    this.custPreferences = {
-      city: this.city,
-      gender: 'undefined',
-      outfit_type: 'undefined',
-      occasion: 'undefined'
-    };
-
-    this.profile = {
-      userid: userid,
-      userName: this.email,
-      password: this.password,
-      userType: 'customer',
-      loginType: loginType,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      gender: 'undefined',
-      city: this.city,
-      designerName: 'undefined',
-      preferences: this.custPreferences,
-      active: true,
-      registeredDate: date,
-      activatedDate: date,
-      deactivatedDate: null,
-      imageUrl: null
-    };
-
-    if (loginType == 'email') {
-      title = 'Account Created';
-      message = 'Your account has been created successfully.';
-    } else {
-      title = 'Sign-Up Successful';
-      message = 'Sign - Up Successful for ' + this.email;
-    }
-
-    this.profServ.postProfile(this.profile).subscribe(
-      res => {
-        this.alertCtrl
-          .create({
-            title: title,
-            message: message,
-            buttons: [
-              {
-                text: 'OK',
-                handler: () => {
-                  this.openPage('HomePage');
-                }
-              }
-            ]
-          })
-          .present();
+    let profileRes = this.profServ.getProfileByUserName(this.email).subscribe(
+      x => {
+        console.log('Observer got a next value: ' + x);
+        if (x) {
+          data = x;
+          this.profileData = x;
+        } else {
+          console.log('Got nothing!');
+          console.log(x);
+        }
       },
       err => {
-        console.log(err);
+        console.error('Observer got an error: ' + err);
         this.toastServ.showToast(err.message, 3000);
-      }
-    );
+      },
+      () => {
+
+        if (data == 'undefined') {
+          //create profile
+          //set storage
+          console.log('Started Profile');
+          console.log('userid: ' + userid);
+          console.log('loginType: ' + loginType);
+
+          this.custPreferences = {
+            city: this.city,
+            gender: 'undefined',
+            outfit_type: 'undefined',
+            occasion: 'undefined'
+          };
+
+          this.profile = {
+            userid: userid,
+            userName: this.email,
+            password: this.password,
+            userType: 'customer',
+            loginType: loginType,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            gender: 'undefined',
+            city: this.city,
+            designerName: 'undefined',
+            preferences: this.custPreferences,
+            active: true,
+            registeredDate: date,
+            activatedDate: date,
+            deactivatedDate: null,
+            imageUrl: null
+          };
+
+          if (loginType == 'email') {
+            title = 'Account Created';
+            message = 'Your account has been created successfully.';
+          } else {
+            title = 'Sign-Up Successful';
+            message = 'Sign - Up Successful for ' + this.email;
+          }
+
+          this.profServ.postProfile(this.profile).subscribe(
+            res => {
+              this.alertCtrl
+                .create({
+                  title: title,
+                  message: message,
+                  buttons: [
+                    {
+                      text: 'OK',
+                      handler: () => {
+                        this.openPage('HomePage');
+                      }
+                    }
+                  ]
+                })
+                .present();
+            },
+            err => {
+              console.log(err);
+              this.toastServ.showToast(err.message, 3000);
+            }
+          );
+
+        }else{
+          this.toastServ.showToast('Profile already exists, please Sign-In',3000);
+          this.googlePlus.disconnect().then(res => {
+            console.log('Sign Out!!');
+            console.log(res);
+          })
+        }  
+     });
   }
 
   openPage(page: string) {
@@ -260,7 +291,12 @@ export class RegisterPage {
       this.navCtrl.push('LoginPage');
     } else if (page == 'HomePage') {
       this.toastServ.showToast('Welcome ' + this.name, 3000);
-      this.navCtrl.setRoot(TabsPage, { authinfo: true });
+      let data = {
+        authinfo: true,
+        city: this.city
+      }
+      this.navCtrl.setRoot(TabsPage, { data });
+      
     } else if (page == 'RegisterPage') {
       this.navCtrl.push('RegisterPage');
     }
